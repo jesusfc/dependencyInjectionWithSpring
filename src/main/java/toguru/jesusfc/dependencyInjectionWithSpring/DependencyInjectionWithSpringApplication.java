@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import toguru.jesusfc.dependencyInjectionWithSpring.controllers.*;
+import toguru.jesusfc.dependencyInjectionWithSpring.services.PrototypeBean;
+import toguru.jesusfc.dependencyInjectionWithSpring.services.SingletonBean;
 
 @ComponentScan(basePackages = {"toguru.jesusfc.pets", "toguru.jesusfc.dependencyInjectionWithSpring"})
 @SpringBootApplication
@@ -38,6 +40,17 @@ public class DependencyInjectionWithSpringApplication {
         System.out.println("------ Constructor");
         ConstructorInjectedController constructorInjectedController = (ConstructorInjectedController) ctx.getBean("constructorInjectedController");
         System.out.println(constructorInjectedController.getGretting());
+
+        System.out.println("---------- Bean Scope");
+        SingletonBean singletonBean1 = ctx.getBean(SingletonBean.class);
+        System.out.println(singletonBean1.getMyScope());
+        SingletonBean singletonBean2 = ctx.getBean(SingletonBean.class);
+        System.out.println(singletonBean2.getMyScope());
+
+        PrototypeBean prototypeBean1 = ctx.getBean(PrototypeBean.class);
+        System.out.println(prototypeBean1.getMyScope());
+        PrototypeBean prototypeBean2 = ctx.getBean(PrototypeBean.class);
+        System.out.println(prototypeBean2.getMyScope());
 
     }
 
