@@ -1,12 +1,14 @@
 package toguru.jesusfc.dependencyInjectionWithSpring.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableMBeanExport;
-import org.springframework.context.annotation.Profile;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
+import toguru.jesusfc.dependencyInjectionWithSpring.datasource.FakeDataSource;
 import toguru.jesusfc.dependencyInjectionWithSpring.repositories.EnglishGreetingRepository;
 import toguru.jesusfc.dependencyInjectionWithSpring.repositories.EnglishGreetingRepositoryImpl;
-import toguru.jesusfc.dependencyInjectionWithSpring.services.*;
+import toguru.jesusfc.dependencyInjectionWithSpring.services.I18nEnglishGreetingServiceImpl;
+import toguru.jesusfc.dependencyInjectionWithSpring.services.I18nSpanishGreetingServiceImpl;
+import toguru.jesusfc.dependencyInjectionWithSpring.services.PropertyInjectedGreetingServiceImpl;
+import toguru.jesusfc.dependencyInjectionWithSpring.services.SetterInjectedGreetingServiceImpl;
 import toguru.jesusfc.pets.PetService;
 import toguru.jesusfc.pets.PetServiceFactory;
 
@@ -14,8 +16,22 @@ import toguru.jesusfc.pets.PetServiceFactory;
  * Created By Jesús Fdez. Caraballo on 18/04/2021.
  * 3 Spring beans in a configuration class
  */
+@PropertySource("classpath:datasource.properties")
+@ImportResource("classpath:sfgdi-config.xml")
 @Configuration
 public class GreetingServicesConfig {
+
+
+    @Bean
+    FakeDataSource fakeDataSource(@Value("${jesusfc.username}") String username,
+                                  @Value("${jesusfc.password}") String password,
+                                  @Value("${jesusfc.jdbcurl}") String jdbcurl) {
+        FakeDataSource fakeDataSource = new FakeDataSource();
+        fakeDataSource.setUsername(username);
+        fakeDataSource.setPassword(password);
+        fakeDataSource.setJdbcurl(jdbcurl);
+        return fakeDataSource;
+    }
 
     @Bean
     PetServiceFactory petServiceFactory() {
@@ -51,10 +67,12 @@ public class GreetingServicesConfig {
         return new I18nEnglishGreetingServiceImpl(englishGreetingRepository);
     }
 
+    /* Insertamos el bean en el contexto con el fichero sfgdi-config.xml
     @Bean
     ConstructorGreetingServiceImpl constructorGreetingServiceImpl() {
         return new ConstructorGreetingServiceImpl();
     }
+    */
 
     @Bean
     PropertyInjectedGreetingServiceImpl propertyInjectedGreetingServiceImpl() {

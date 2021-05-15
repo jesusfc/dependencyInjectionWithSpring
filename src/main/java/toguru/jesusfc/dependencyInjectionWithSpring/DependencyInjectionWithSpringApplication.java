@@ -3,17 +3,15 @@ package toguru.jesusfc.dependencyInjectionWithSpring;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import toguru.jesusfc.dependencyInjectionWithSpring.controllers.*;
+import toguru.jesusfc.dependencyInjectionWithSpring.datasource.FakeDataSource;
 import toguru.jesusfc.dependencyInjectionWithSpring.services.PrototypeBean;
 import toguru.jesusfc.dependencyInjectionWithSpring.services.SingletonBean;
 
-@ComponentScan(basePackages = {"toguru.jesusfc.pets", "toguru.jesusfc.dependencyInjectionWithSpring"})
 @SpringBootApplication
 public class DependencyInjectionWithSpringApplication {
 
     public static void main(String[] args) {
-
 
         ApplicationContext ctx = SpringApplication.run(DependencyInjectionWithSpringApplication.class, args);
 
@@ -52,6 +50,12 @@ public class DependencyInjectionWithSpringApplication {
         PrototypeBean prototypeBean2 = ctx.getBean(PrototypeBean.class);
         System.out.println(prototypeBean2.getMyScope());
 
+        System.out.println("\n---------- Data Source\n");
+        FakeDataSource fakeDataSource = ctx.getBean(FakeDataSource.class);
+        System.out.println(fakeDataSource.getUsername());
+        System.out.println(fakeDataSource.getPassword());
+        System.out.println(fakeDataSource.getJdbcurl());
+        System.out.println("\n----------\n");
     }
 
 }
