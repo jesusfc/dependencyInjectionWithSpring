@@ -3,6 +3,7 @@ package toguru.jesusfc.dependencyInjectionWithSpring;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import toguru.jesusfc.dependencyInjectionWithSpring.config.AppConfiguration;
 import toguru.jesusfc.dependencyInjectionWithSpring.controllers.*;
 import toguru.jesusfc.dependencyInjectionWithSpring.datasource.FakeDataSource;
 import toguru.jesusfc.dependencyInjectionWithSpring.services.PrototypeBean;
@@ -50,12 +51,21 @@ public class DependencyInjectionWithSpringApplication {
         PrototypeBean prototypeBean2 = ctx.getBean(PrototypeBean.class);
         System.out.println(prototypeBean2.getMyScope());
 
-        System.out.println("\n---------- Data Source\n");
+        System.out.println("\n---------- Fake Data Source\n");
         FakeDataSource fakeDataSource = ctx.getBean(FakeDataSource.class);
         System.out.println(fakeDataSource.getUsername());
         System.out.println(fakeDataSource.getPassword());
         System.out.println(fakeDataSource.getJdbcurl());
         System.out.println("\n----------\n");
+
+        System.out.println("\n----Config Props Bean ------\n");
+        AppConfiguration appConfiguration = ctx.getBean(AppConfiguration.class);
+        System.out.println(appConfiguration.getUsername());
+        System.out.println(appConfiguration.getPassword());
+        System.out.println(appConfiguration.getJdbcurl());
+
+        System.out.println("\n----Constructor Binding ------\n");
+
     }
 
 }

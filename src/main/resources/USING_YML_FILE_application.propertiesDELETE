@@ -1,3 +1,4 @@
+spring.profiles.active=EN,dog,qa
 jesusfc.username=superuser
 jesusfc.password=mypass
 jesusfc.jdbcurl=urlDatasource

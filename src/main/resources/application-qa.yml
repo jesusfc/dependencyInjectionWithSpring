@@ -1,0 +1,4 @@
+jesusfc:
+  username: QA-YML-superuser
+  password: QA-YML-mypass
+  jdbcurl: QA-YML-urlDatasource

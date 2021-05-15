@@ -1,6 +1,7 @@
 package toguru.jesusfc.dependencyInjectionWithSpring.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.*;
 import toguru.jesusfc.dependencyInjectionWithSpring.datasource.FakeDataSource;
 import toguru.jesusfc.dependencyInjectionWithSpring.repositories.EnglishGreetingRepository;
@@ -16,20 +17,17 @@ import toguru.jesusfc.pets.PetServiceFactory;
  * Created By Jesús Fdez. Caraballo on 18/04/2021.
  * 3 Spring beans in a configuration class
  */
-@PropertySource("classpath:datasource.properties")
 @ImportResource("classpath:sfgdi-config.xml")
 @Configuration
 public class GreetingServicesConfig {
 
 
     @Bean
-    FakeDataSource fakeDataSource(@Value("${jesusfc.username}") String username,
-                                  @Value("${jesusfc.password}") String password,
-                                  @Value("${jesusfc.jdbcurl}") String jdbcurl) {
+    FakeDataSource fakeDataSource(AppConfiguration appConfiguration) {
         FakeDataSource fakeDataSource = new FakeDataSource();
-        fakeDataSource.setUsername(username);
-        fakeDataSource.setPassword(password);
-        fakeDataSource.setJdbcurl(jdbcurl);
+        fakeDataSource.setUsername(appConfiguration.getUsername());
+        fakeDataSource.setPassword(appConfiguration.getPassword());
+        fakeDataSource.setJdbcurl(appConfiguration.getJdbcurl());
         return fakeDataSource;
     }
 

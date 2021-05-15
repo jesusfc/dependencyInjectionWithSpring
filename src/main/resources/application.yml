@@ -1,0 +1,22 @@
+##-Dspring.profiles.active=prod
+spring:
+  profiles:
+    ##active: dog, EN, prod ## idem than a list
+    active:
+      - dog
+      - EN
+      - prod
+jesusfc:
+  username: superuser
+  password: mypass
+  jdbcurl: urlDatasource
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+jesusfc:
+  username: YMLPRODsuperuser
+  password: YMLPRODmypass
+  jdbcurl: YMLPRODurlDatasource
